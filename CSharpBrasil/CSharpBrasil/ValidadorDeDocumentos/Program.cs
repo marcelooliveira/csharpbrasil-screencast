@@ -20,18 +20,52 @@ namespace ValidadorDeDocumentos
             ValidarCPF(cpf2);
             ValidarCPF(cpf3);
 
+            string cnpj1 = "51241758000152";
+            string cnpj2 = "14128481000127";
+
+            ValidarCNPJ(cnpj1);
+            ValidarCNPJ(cnpj2);
+
+            string titulo1 = "041372570132";
+            string titulo2 = "774387480130";
+
+            ValidarTitulo(titulo1);
+            ValidarTitulo(titulo2);
+        }
+
+        private static void ValidarTitulo(string titulo)
+        {
+            if (new TituloEleitoralValidator().IsValid(titulo))
+            {
+                Debug.WriteLine("Título válido: " + titulo);
+            }
+            else
+            {
+                Debug.WriteLine("Título inválido: " + titulo);
+            }
+        }
+
+        private static void ValidarCNPJ(string cnpj)
+        {
+            if (new CNPJValidator().IsValid(cnpj))
+            {
+                Debug.WriteLine("CNPJ válido: " + cnpj);
+            }
+            else
+            {
+                Debug.WriteLine("CNPJ inválido: " + cnpj);
+            }
         }
 
         private static void ValidarCPF(string cpf)
         {
-            try
+            if(new CPFValidator().IsValid(cpf))
             {
-                new CPFValidator().AssertValid(cpf);
                 Debug.WriteLine("CPF válido: " + cpf);
             }
-            catch (Exception exc)
+            else
             {
-                Debug.WriteLine("CPF inválido: " + cpf + " : " + exc.ToString());
+                Debug.WriteLine("CPF inválido: " + cpf);
             }
         }
     }
