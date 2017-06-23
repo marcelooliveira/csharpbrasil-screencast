@@ -24,6 +24,19 @@ namespace TrabalhandoComDatas
             Debug.WriteLine(data.ToString("HH:mm"));
             Debug.WriteLine(data.ToString("HH:mm:ss.fff"));
 
+            Debug.WriteLine(data.ToString("D"));
+            Debug.WriteLine(data.ToString("m"));
+            Debug.WriteLine(data.ToString("Y"));
+
+            Debug.WriteLine(data.ToString("G"));
+            Debug.WriteLine(data.ToString("g"));
+
+            Debug.WriteLine(data.ToString("O"));
+            Debug.WriteLine(DateTime.Parse(data.ToString("O")).ToString("dd/MM/yyyy HH:mm:ss.fff"));
+
+            Debug.WriteLine(data.ToString("t"));
+            Debug.WriteLine(data.ToString("T"));
+
         }
     }
 }
