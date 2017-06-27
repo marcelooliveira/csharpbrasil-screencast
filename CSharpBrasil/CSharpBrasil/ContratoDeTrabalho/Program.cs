@@ -1,4 +1,6 @@
-﻿using Caelum.Stella.CSharp.Http;
+﻿using Caelum.Stella.CSharp.Format;
+using Caelum.Stella.CSharp.Http;
+using Caelum.Stella.CSharp.Vault;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,31 +19,31 @@ namespace ContratoDeTrabalho
                 Empresa = new
                 {
                     RazaoSocial = "Alura Serviços Hidráulicos Ltda.",
-                    CNPJ = "23432323000150",
+                    CNPJ = new CNPJFormatter().Format("23432323000150"),
                     Endereco = viaCEP.GetEndereco("04101300"),
                     Numero = "123 fundos"
                 },
                 Funcionario = new
                 {
                     Nome = "Mario Mario",
-                    CPF = "14538551228",
+                    CPF = new CPFFormatter().Format("14538551228"),
                     RG = "123456789-00",
                     Nacionalidade = "italiana",
                     EstadoCivil = "casado",
                     Endereco = viaCEP.GetEndereco("07091000"),
                     Numero = "234"
                 },
-                Inicio = new DateTime(2018, 1, 1),
+                Inicio = new DateTime(2018, 1, 1).ToString("d"),
                 Cargo = "encanador",
-                Salario = 3108.45
+                Salario = new Money(3108.45)
             };
 
             string documento = $@"                                             CONTRATO INDIVIDUAL DE TRABALHO TEMPORÁRIO
 
 
-            EMPREGADOR: {contrato.Empresa.RazaoSocial}, com sede à(LOGRADOURO), (NUMERO), (BAIRRO), CEP(CEP), (LOCALIDADE), (UF), inscrita no CNPJ sob nº {contrato.Empresa.CNPJ};
+            EMPREGADOR: {contrato.Empresa.RazaoSocial}, com sede à {contrato.Empresa.Endereco.Logradouro}, {contrato.Empresa.Numero}, {contrato.Empresa.Endereco.Bairro}, CEP {contrato.Empresa.Endereco.CEP}, {contrato.Empresa.Endereco.Localidade}, {contrato.Empresa.Endereco.UF}, inscrita no CNPJ sob nº {contrato.Empresa.CNPJ};
 
-            EMPREGADO: {contrato.Funcionario.Nome}, {contrato.Funcionario.Nacionalidade}, {contrato.Funcionario.EstadoCivil}, portador da cédula de identidade R.G.nº {contrato.Funcionario.RG} e CPF/ MF nº {contrato.Funcionario.CPF}, residente e domiciliado na(LOGRADOURO), (NUMERO), (BAIRRO), CEP(CEP), (LOCALIDADE), (UF).
+            EMPREGADO: {contrato.Funcionario.Nome}, {contrato.Funcionario.Nacionalidade}, {contrato.Funcionario.EstadoCivil}, portador da cédula de identidade R.G.nº {contrato.Funcionario.RG} e CPF/ MF nº {contrato.Funcionario.CPF}, residente e domiciliado na {contrato.Funcionario.Endereco.Logradouro}, {contrato.Funcionario.Numero}, {contrato.Funcionario.Endereco.Bairro}, CEP {contrato.Funcionario.Endereco.CEP}, {contrato.Funcionario.Endereco.Localidade}, {contrato.Funcionario.Endereco.UF}.
 
 
 Pelo presente instrumento particular de contrato individual de trabalho, fica justo e contratado o seguinte:
@@ -50,7 +52,7 @@ Cláusula 1ª - O EMPREGADO prestará ao EMPREGADOR, a partir de {contrato.Inici
 
             Cláusula 2ª - Não haverá expediente nos dias de sábado, sendo prestado a compensação de horário semanal;
 
-            Cláusula 3ª - O EMPREGADOR pagará mensalmente, ao EMPREGADO, a título de salário a importância de {contrato.Salario} (SALÁRIO POR EXTENSO), com os descontos previstos por lei;
+            Cláusula 3ª - O EMPREGADOR pagará mensalmente, ao EMPREGADO, a título de salário a importância de {contrato.Salario.ToString()} ({contrato.Salario.Extenso()}), com os descontos previstos por lei;
 
             Cláusula 4ª - Estará o EMPREGADO subordinado a legislação vigente no que diz respeito aos descontos de faltas e demais sanções disciplinares contidas na Consolidação das Leis do Trabalho.
 
@@ -62,7 +64,7 @@ Cláusula 1ª - O EMPREGADO prestará ao EMPREGADOR, a partir de {contrato.Inici
 Como prova do acordado, assinam instrumento, afirmado e respeitando seu teor por inteiro, e firmam conjuntamente a este duas testemunhas, comprovando as razões descritas.
 
 
-(LOCALIDADE), (DATA POR EXTENSO)
+{contrato.Empresa.Endereco.Localidade}, {DateTime.Today.ToString("D")}
  
  
 _______________________________________________________
